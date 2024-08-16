@@ -1,4 +1,5 @@
-// NOT WORKING. FIX REQUIRED
+//FIX :- Don't use pow(10, i). It can be inaccurate or time consuming at times, when calculating such large values in a series.
+//Better compute by multiplying 10 for every iteration
 
 #include <bits/stdc++.h>
 #define ull unsigned long long
