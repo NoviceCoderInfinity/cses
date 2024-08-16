@@ -1,27 +1,41 @@
 // NOT WORKING. FIX REQUIRED
 
 #include <bits/stdc++.h>
-#define ll long long
+#define ull unsigned long long
 using namespace std;
 
-int digit_query(ll num) {
-	if (num < 10) {return num;}
-	ll num_dig = log(num);
-	ll i_th_num_in_dig_len = num - ( pow(10, num_dig) - 1 );
-	ll final_num = ceil( ((long double) i_th_num_in_dig_len) / ((long double) num_dig) );
-	ll part_of_num = i_th_num_in_dig_len % num_dig;
-	while ( log(final_num) <= part_of_num ) { final_num /= 10; }
-	return static_cast<int>( final_num%10 );
-}
+ull L_Max = 1e18;
 
 int main() {
-	int q; cin >> q; vector<int> ans;
-	for (int i = 0; i < q; ++i) {
-		ll tmp; cin >> tmp;
-		ans.push_back(digit_query(tmp));
+	ios::sync_with_stdio(0);
+	cin.tie(0);
+	cout.tie(0);
+
+	vector<short> digits;
+
+	int test; cin >> test;
+	while(test--) {
+		ull n; cin >> n;
+		ull sum = 0; ull i = 0;
+		ull nxt_add = 9 * pow(10, 0) * (0 + 1);
+		
+		while (sum + nxt_add < n) {
+			sum += nxt_add; ++i;
+			nxt_add = 9 * pow(10, i) * (i + 1);
+		}
+		ull tmp = n - sum;
+		ull row = static_cast<unsigned long long>( ceil( (long double)tmp / (long double)(i + 1) ) );
+		ull col = (n - sum) % (i + 1) - 1;
+		if (col == -1) {col = i;}
+		ull num = pow(10, i) + row - 1;
+		string s = to_string(num);
+		short res = s[col] - '0';
+		digits.push_back(res);
 	}
-	for (int i = 0; i < q; ++i) {
-		cout << ans[i] << endl;
+
+	for (auto &d : digits) {
+		cout << d << "\n";
 	}
+
 	return 0;
 }
