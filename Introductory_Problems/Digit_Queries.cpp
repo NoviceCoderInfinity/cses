@@ -17,17 +17,18 @@ int main() {
 	while(test--) {
 		ull n; cin >> n;
 		ull sum = 0; ull i = 0;
-		ull nxt_add = 9 * pow(10, 0) * (0 + 1);
-		
+		ull pw_10 = 1;
+		ull nxt_add = 9 * pw_10 * (i + 1);
+
 		while (sum + nxt_add < n) {
-			sum += nxt_add; ++i;
-			nxt_add = 9 * pow(10, i) * (i + 1);
+			sum += nxt_add; ++i; pw_10 *= 10;
+			nxt_add = 9 * pw_10 * (i + 1);
 		}
 		ull tmp = n - sum;
 		ull row = static_cast<unsigned long long>( ceil( (long double)tmp / (long double)(i + 1) ) );
 		ull col = (n - sum) % (i + 1) - 1;
 		if (col == -1) {col = i;}
-		ull num = pow(10, i) + row - 1;
+		ull num = pw_10 + row - 1;
 		string s = to_string(num);
 		short res = s[col] - '0';
 		digits.push_back(res);
