@@ -10,7 +10,16 @@
 file_path=$1
 folder_path=$2
 
-g++ -o output $file_path
+if command -v g++-16 >/dev/null 2>&1; then
+    compiler=g++-16
+else
+    compiler=g++
+fi
+
+"$compiler" -std=c++17 -o output "$file_path" || exit 1
+
+# macOS defaults to an ~8 MB stack. The hard cap in this environment is 65520 KB.
+ulimit -s 65520
 
 if [ $? -ne 0 ]; then
     echo "Compilation failed"
